@@ -12,7 +12,7 @@ export default function LivePrices() {
       setLoading(true);
       try {
         const res = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,tether,xrp,binancecoin,usd-coin&vs_currencies=usd"
+          "/api/coingecko?path=/simple/price&ids=bitcoin,ethereum,solana,tether,xrp,binancecoin,usd-coin&vs_currencies=usd"
         );
         const data = await res.json();
         setPrices(data);

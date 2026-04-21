@@ -13,17 +13,16 @@ export default function Portfolio() {
 
     if (ids.length === 0) return;
 
-    Promise.all(
-      ids.map((id: string) =>
-        axios
-          .get(`https://api.coingecko.com/api/v3/coins/${id}`)
-          .then((res) => res.data)
-          .catch(() => null)
-      )
-    )
-      .then((data) => {
-        const filtered = data.filter(Boolean);
-        setCoins(filtered);
+    axios
+      .get("/api/coingecko", {
+        params: {
+          path: "/coins/markets",
+          vs_currency: "usd",
+          ids: ids.join(","),
+        },
+      })
+      .then((res) => {
+        setCoins(res.data);
       })
       .catch(() => setError(true));
   }, []);

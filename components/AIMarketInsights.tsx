@@ -15,8 +15,9 @@ export default function AIMarketInsights() {
       try {
         setLoading(true);
         // Fetch top 50 coins to analyze market breadth and top movers
-        const res = await axios.get("https://api.coingecko.com/api/v3/coins/markets", {
+        const res = await axios.get("/api/coingecko", {
           params: {
+            path: "/coins/markets",
             vs_currency: "usd",
             order: "market_cap_desc",
             per_page: 50,

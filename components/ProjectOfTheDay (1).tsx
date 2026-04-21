@@ -11,19 +11,14 @@ export default function ProjectOfTheDay() {
       try {
         const res = await axios.get("/api/coingecko", {
           params: {
-            path: "/coins/markets",
             vs_currency: "usd",
             order: "market_cap_desc",
             per_page: 1,
             page: 1,
           },
         });
-        if (Array.isArray(res.data) && res.data.length > 0) {
-          setCoin(res.data[0]);
-          setError(null);
-        } else {
-          throw new Error("No data returned");
-        }
+        setCoin(res.data[0]);
+        setError(null);
       } catch (err: any) {
         console.error("❌ Project of the Day Error:", err.message);
         setError("Error loading project of the day.");

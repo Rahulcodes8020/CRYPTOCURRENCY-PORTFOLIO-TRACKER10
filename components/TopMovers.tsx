@@ -9,15 +9,19 @@ export default function TopMovers() {
 
   useEffect(() => {
     axios
-      .get("https://api.coingecko.com/api/v3/coins/markets", {
+      .get("/api/coingecko", {
         params: {
+          path: "/coins/markets",
           vs_currency: "usd",
-          order: "market_cap_desc", // ✅ valid
+          order: "market_cap_desc",
           per_page: 50,
           price_change_percentage: "24h"
         }
       })
       .then(res => {
+        if (!Array.isArray(res.data)) {
+           throw new Error("Invalid format");
+        }
         const topMovers = res.data
           .filter((c: any) => c.price_change_percentage_24h !== null)
           .sort(
@@ -29,7 +33,7 @@ export default function TopMovers() {
         setCoins(topMovers);
       })
       .catch(err => {
-        console.error("❌ TopMovers error:", err);
+        console.error("❌ TopMovers error:", err.message);
         setError(true);
       });
   }, []);
@@ -40,7 +44,7 @@ export default function TopMovers() {
   return (
     <section className="p-6">
       <h2 className="text-xl font-bold mb-4 text-blue-400">🚀 Top Movers</h2>
-      <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {coins.map(c => (
           <CoinCard key={c.id} coin={c} />
         ))}

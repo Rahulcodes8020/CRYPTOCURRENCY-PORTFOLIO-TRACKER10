@@ -35,13 +35,6 @@ export default function Header() {
           <FaSignal />
           <span className="hidden md:inline">Live</span>
         </Link>
-        <Link
-          href="/upcoming"
-          className="flex items-center gap-2 hover:text-pink-500 transition-colors"
-        >
-          <FaDoorOpen className="text-pink-400 rotate-12" />
-          <span className="hidden md:inline">Upcoming</span>
-        </Link>
         {/* ✅ Share Room only */}
         <Link
           href="/share-market-room"

@@ -28,8 +28,9 @@ export default function Watchlist() {
     const ids = typeof stored[0] === "string" ? stored : stored.map((c: any) => c.id);
 
     axios
-      .get("https://api.coingecko.com/api/v3/coins/markets", {
+      .get("/api/coingecko", {
         params: {
+          path: "/coins/markets",
           vs_currency: "usd",
           ids: ids.join(","),
         },

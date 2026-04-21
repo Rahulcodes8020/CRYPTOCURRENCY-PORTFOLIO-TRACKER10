@@ -15,7 +15,7 @@ export default function LiveChart({ coinId }: LiveChartProps) {
   const fetchMarketChart = async () => {
     try {
       const res = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=1&interval=minute`
+        `/api/coingecko?path=/coins/${coinId}/market_chart&vs_currency=usd&days=1&interval=minute`
       );
       const formatted = res.data.prices.map((point: number[]) => ({
         time: new Date(point[0]).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),

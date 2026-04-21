@@ -42,7 +42,7 @@ export default function PortfolioClient() {
     const fetchData = async () => {
       const ids = portfolio.map((coin) => coin.id).join(",");
       const res = await fetch(
-        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+        `/api/coingecko?path=/simple/price&ids=${ids}&vs_currencies=usd`
       );
       const prices = await res.json();
 

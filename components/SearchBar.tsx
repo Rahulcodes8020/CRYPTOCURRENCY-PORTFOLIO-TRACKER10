@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
 
-export default function SearchBar({ onSearch }: { onSearch: (query: string) => void }) {
+export default function SearchBar({ onSearchAction }: { onSearchAction: (query: string) => void }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    onSearch(query.trim().toLowerCase());
+    onSearchAction(query.trim().toLowerCase());
   };
 
   return (

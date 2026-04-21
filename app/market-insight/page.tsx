@@ -5,8 +5,8 @@ import MarketTable from "@/components/MarketTable";
 
 const MarketInsightPage = () => {
   const [search, setSearch] = useState("");
-  const [coins, setCoins] = useState([]);
-  const [filtered, setFiltered] = useState([]);
+  const [coins, setCoins] = useState<any[]>([]);
+  const [filtered, setFiltered] = useState<any[]>([]);
   const [lastUpdated, setLastUpdated] = useState("");
 
   useEffect(() => {

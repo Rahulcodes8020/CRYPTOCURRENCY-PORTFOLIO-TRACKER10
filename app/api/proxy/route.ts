@@ -20,9 +20,13 @@ export async function GET(req: Request) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
 
+    const keyHeader = COINGECKO_API_KEY?.startsWith("CG-") 
+      ? "x-cg-demo-api-key" 
+      : "x-cg-pro-api-key";
+
     const response = await fetch(fullUrl, {
       headers: {
-        "x-cg-pro-api-key": COINGECKO_API_KEY || "",
+        [keyHeader]: COINGECKO_API_KEY || "",
       },
       signal: controller.signal,
     });

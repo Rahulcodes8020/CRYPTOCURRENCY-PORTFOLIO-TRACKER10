@@ -18,10 +18,11 @@ const CoinList = () => {
 
   const fetchTopCoins = async () => {
     try {
-      if (loading) return; // 🛑 Prevent spam
+      if (loading) return;
       setLoading(true);
       const res = await axios.get("/api/coingecko", {
         params: {
+          path: "/coins/markets",
           vs_currency: "usd",
           order: "market_cap_desc",
           per_page: 10,
@@ -29,14 +30,22 @@ const CoinList = () => {
           sparkline: false,
         },
       });
-      setCoins(res.data);
-      setError(null);
+      
+      if (Array.isArray(res.data)) {
+        setCoins(res.data);
+        setError(null);
+      } else {
+        throw new Error("Invalid data format received");
+      }
     } catch (err: any) {
       console.error("❌ Fetch Error:", err.message);
-      if (err.response?.status === 429) {
-        setError("⚠️ Too many requests. Wait a few seconds.");
+      const status = err.response?.status;
+      if (status === 429) {
+        setError("⚠️ Rate limit reached. Retrying shortly...");
+      } else if (status === 500) {
+        setError("❌ Server processing error. Please try again.");
       } else {
-        setError("❌ Failed to fetch top coins.");
+        setError(`❌ Network Error: ${err.message || "Failed to connect"}`);
       }
     } finally {
       setLoading(false);
